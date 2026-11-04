@@ -1,0 +1,86 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import type { Lang } from "@/lib/i18n";
+import { ui, type PostCategory } from "@/lib/content";
+import { Icon } from "./Icon";
+import { Lit } from "./Lit";
+import { Cover } from "./Cover";
+
+export type PostCard = {
+  slug: string;
+  url: string;
+  category: PostCategory;
+  title: string;
+  excerpt: string;
+  dateLabel: string;
+  readLabel: string;
+  seed: number;
+};
+
+const cats: PostCategory[] = ["dhamma", "education", "community", "technology"];
+
+export function BlogExplorer({ lang, posts }: { lang: Lang; posts: PostCard[] }) {
+  const t = ui.blog;
+  const [cat, setCat] = useState<PostCategory | "all">("all");
+  const [q, setQ] = useState("");
+
+  const list = useMemo(() => {
+    const s = q.trim().toLowerCase();
+    return posts.filter(
+      (p) => (cat === "all" || p.category === cat) && (!s || `${p.title} ${p.excerpt}`.toLowerCase().includes(s)),
+    );
+  }, [posts, cat, q]);
+
+  return (
+    <div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div role="group" aria-label="Categories" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+          {(["all", ...cats] as const).map((c) => (
+            <button
+              key={c}
+              type="button"
+              aria-pressed={cat === c}
+              onClick={() => setCat(c)}
+              className={`h-10 shrink-0 rounded-full border px-4 text-sm font-semibold transition-colors ${
+                cat === c ? "border-fg bg-fg text-bg" : "border-line bg-card hover:border-fg/30"
+              }`}
+            >
+              {c === "all" ? t.all[lang] : t.cat[c][lang]}
+            </button>
+          ))}
+        </div>
+        <label className="relative block sm:w-64">
+          <span className="sr-only">{t.search[lang]}</span>
+          <Icon name="search" size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t.search[lang]} className="field !rounded-full !py-2.5 pl-11" />
+        </label>
+      </div>
+
+      {list.length === 0 ? (
+        <p className="mt-12 text-center text-muted">{t.none[lang]}</p>
+      ) : (
+        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {list.map((p) => (
+            <li key={p.slug}>
+              <Lit href={p.url} className="surface group flex h-full flex-col rounded-3xl">
+                <Cover seed={p.seed} className="h-44">
+                  <span className="absolute left-4 top-4 rounded-full bg-black/35 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+                    {t.cat[p.category][lang]}
+                  </span>
+                </Cover>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="title text-lg">{p.title}</h3>
+                  <p className="mt-2 line-clamp-3 flex-1 text-[0.95rem] text-muted">{p.excerpt}</p>
+                  <p className="mt-4 flex items-center gap-2 text-sm text-muted">
+                    <Icon name="clock" size={15} /> {p.dateLabel} · {p.readLabel}
+                  </p>
+                </div>
+              </Lit>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}

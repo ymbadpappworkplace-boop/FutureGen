@@ -1,0 +1,45 @@
+import { Wheel } from "./Logo";
+
+const palettes = [
+  { bg: "linear-gradient(150deg,#ffd978 0%,#f3a51d 55%,#c9650a 100%)", fg: "#3a1700" },
+  { bg: "linear-gradient(150deg,#8a1c22 0%,#5c0f14 60%,#2a0508 100%)", fg: "#ffe9b8" },
+  { bg: "linear-gradient(150deg,#3b78e8 0%,#0057b8 55%,#06306b 100%)", fg: "#ffffff" },
+  { bg: "linear-gradient(150deg,#35958a 0%,#1a5e57 60%,#0c3532 100%)", fg: "#ffffff" },
+  { bg: "linear-gradient(150deg,#d9648d 0%,#a0305f 60%,#5c1536 100%)", fg: "#ffffff" },
+];
+
+export const palette = (seed: number) => palettes[Math.abs(seed) % palettes.length];
+
+/** Generative artwork used where no photograph is supplied yet (blog, events). */
+export function Cover({ seed, className = "", children }: { seed: number; className?: string; children?: React.ReactNode }) {
+  const p = palette(seed);
+  return (
+    <div className={`relative overflow-hidden ${className}`} style={{ background: p.bg, color: p.fg }}>
+      <Wheel className="absolute -bottom-12 -right-12 h-52 w-52 opacity-20" />
+      <Wheel className="absolute -left-8 -top-10 h-28 w-28 opacity-10" />
+      {children}
+    </div>
+  );
+}
+
+/** A book-style cover for Academy courses. */
+export function Book({ seed, title, badge }: { seed: number; title: string; badge?: string }) {
+  const p = palette(seed);
+  return (
+    <div
+      className="relative aspect-[3/4] w-full overflow-hidden rounded-r-xl rounded-l-[0.2rem] shadow-[0_18px_36px_-16px_rgba(0,0,0,.55)]"
+      style={{ background: p.bg, color: p.fg }}
+    >
+      <div className="absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/30 to-transparent" />
+      <div className="absolute inset-y-0 left-3 w-px bg-white/25" />
+      <Wheel className="absolute -right-8 -top-8 h-32 w-32 opacity-20" />
+      {badge && (
+        <span className="absolute right-3 top-3 rounded-md bg-black/55 px-2 py-0.5 text-[0.7rem] font-bold text-white">{badge}</span>
+      )}
+      <div className="absolute inset-x-0 bottom-0 p-5 pl-7">
+        <div className="mb-3 h-0.5 w-8 rounded-full bg-current opacity-60" />
+        <p className="text-lg font-bold leading-snug">{title}</p>
+      </div>
+    </div>
+  );
+}

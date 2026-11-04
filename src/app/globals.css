@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Design tokens — "lamplight"
+  paper / ink      : Apple-style neutral surfaces so the content stays calm
+  lamp (gold)      : the saffron of the robe and the oil lamp — the one warm accent
+  vihara (maroon)  : the deep red of the temple banner, used for statement surfaces
+  gen (blue)       : the "Gen" blue from the YMBA FutureGen wordmark, used for links and focus
+*/
+:root {
+  --bg: #f5f5f7;
+  --bg-2: #ebebef;
+  --fg: #1d1d1f;
+  --muted: #6e6e73;
+  --card: rgba(255, 255, 255, 0.78);
+  --card-solid: #ffffff;
+  --line: rgba(29, 29, 31, 0.1);
+  --lamp: #e89a00;
+  --lamp-2: #f6b81c;
+  --vihara: #5c0f14;
+  --gen: #0057b8;
+  --glow: rgba(246, 184, 28, 0.35);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 40px -22px rgba(40, 20, 0, 0.28);
+  --ff: var(--font-sinhala), -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    var(--font-inter), "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+}
+
+.dark {
+  --bg: #120a0c;
+  --bg-2: #1a1013;
+  --fg: #f5efe8;
+  --muted: #a99f98;
+  --card: rgba(255, 228, 196, 0.055);
+  --card-solid: #1c1215;
+  --line: rgba(255, 228, 196, 0.12);
+  --lamp: #f6b81c;
+  --lamp-2: #ffd45e;
+  --vihara: #3a0a0e;
+  --gen: #79a6ff;
+  --glow: rgba(246, 184, 28, 0.22);
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 50px -28px rgba(0, 0, 0, 0.9);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--ff);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.6;
+    min-height: 100dvh;
+  }
+  /* Sinhala glyph stacks are taller than Latin ones: give them room */
+  html[lang="si"] body { line-height: 1.8; }
+  ::selection { background: var(--lamp-2); color: #1b0f02; }
+  :focus-visible {
+    outline: 2px solid var(--gen);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+}
+
+@layer components {
+  .wrap { width: min(100% - 2rem, 74rem); margin-inline: auto; }
+  .section { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+
+  /* headline type: SF-style tight tracking for Latin only (tracking harms Sinhala shaping) */
+  .display { font-weight: 700; line-height: 1.12; }
+  html[lang="en"] .display { letter-spacing: -0.035em; line-height: 1.04; }
+  html[lang="en"] .title { letter-spacing: -0.025em; }
+  .title { font-weight: 700; line-height: 1.25; }
+
+  .text-gradient {
+    background: linear-gradient(100deg, #f6b81c 0%, #e8750a 45%, #b3261e 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    display: inline-block; padding-block: 0.06em;
+  }
+  .dark .text-gradient { background-image: linear-gradient(100deg, #ffd45e 0%, #f6b81c 40%, #ff8a4c 100%); }
+
+  .glass {
+    background: var(--card);
+    -webkit-backdrop-filter: blur(22px) saturate(1.6);
+    backdrop-filter: blur(22px) saturate(1.6);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .surface {
+    background: var(--card-solid);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    height: 3rem; padding: 0 1.5rem; border-radius: 9999px;
+    font-weight: 600; font-size: 0.95rem; white-space: nowrap; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.2s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-lamp {
+    background: linear-gradient(135deg, var(--lamp-2), var(--lamp));
+    color: #1b0f02;
+    box-shadow: 0 10px 26px -10px rgba(232, 154, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+  .btn-lamp:hover { transform: translateY(-1px); box-shadow: 0 16px 34px -10px rgba(232, 154, 0, 0.8), inset 0 1px 0 rgba(255,255,255,.55); }
+  .btn-ink { background: var(--fg); color: var(--bg); }
+  .btn-ink:hover { transform: translateY(-1px); }
+  .btn-ghost { background: var(--card); border: 1px solid var(--line); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+  .btn-ghost:hover { background: var(--card-solid); }
+
+  .icon-btn {
+    display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 9999px;
+    transition: background-color 0.2s ease; cursor: pointer;
+  }
+  .icon-btn:hover { background: var(--line); }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.75rem;
+    border-radius: 9999px; font-size: 0.8rem; font-weight: 600;
+    background: var(--card); border: 1px solid var(--line); color: var(--muted);
+  }
+
+  .field {
+    width: 100%; border-radius: 1rem; border: 1px solid var(--line); background: var(--card-solid);
+    padding: 0.85rem 1rem; font: inherit; color: inherit; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field:focus { outline: none; border-color: var(--gen); box-shadow: 0 0 0 4px color-mix(in srgb, var(--gen) 18%, transparent); }
+
+  /* lamp-light hover: the soft glow follows the pointer, in keeping with the lamp motif */
+  .lit { position: relative; overflow: hidden; isolation: isolate; }
+  .lit::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 65%);
+    transition: opacity 0.35s ease;
+  }
+  .lit:hover::before { opacity: 1; }
+
+  .grain::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.18; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .skip {
+    position: fixed; left: 1rem; top: -4rem; z-index: 100; padding: 0.6rem 1rem; border-radius: 9999px;
+    background: var(--fg); color: var(--bg); font-weight: 600; transition: top 0.2s;
+  }
+  .skip:focus { top: 1rem; }
+}
+
+/* ---- the one orchestrated page-load moment: the hero assembles ---- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes kindle { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+.hero-in > * { opacity: 0; animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+.hero-in > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-in > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-in > *:nth-child(3) { animation-delay: 0.3s; }
+.hero-in > *:nth-child(4) { animation-delay: 0.42s; }
+.hero-in > *:nth-child(5) { animation-delay: 0.55s; }
+.hero-card { opacity: 0; animation: rise 1s 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+.wheel-in { animation: kindle 1.6s 0.1s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 160s linear infinite; }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee-track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* gentle reveal, used only on the bento grid */
+.js .reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+.snap-row { scroll-snap-type: x mandatory; scrollbar-width: none; }
+.snap-row::-webkit-scrollbar { display: none; }
+.snap-row > * { scroll-snap-align: start; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in > *, .hero-card, .wheel-in { animation: none; opacity: 1; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .spin-slow, .marquee-track { animation: none; }
+}
+
+/* the pointer is the lamp: a warm pool of light follows it across the hero */
+.lamp-hero { position: relative; overflow: hidden; isolation: isolate; }
+.lamp-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(560px circle at var(--lx, 72%) var(--ly, 28%), var(--glow), transparent 70%);
+}
