@@ -5,10 +5,12 @@ import { getLang, href } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 import { Icon } from "@/components/Icon";
 import { PageHeader } from "@/components/PageHeader";
+import { MemberDirectory } from "@/components/MemberDirectory";
+import { memberCopy } from "@/lib/members";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const lang = await getLang(params);
-  return { title: ui.community.title[lang], description: ui.community.intro[lang] };
+  return { title: memberCopy.title[lang], description: memberCopy.intro[lang] };
 }
 
 export default async function CommunityPage({ params }: { params: Promise<{ lang: string }> }) {
@@ -17,7 +19,8 @@ export default async function CommunityPage({ params }: { params: Promise<{ lang
 
   return (
     <>
-      <PageHeader title={t.title[lang]} intro={t.intro[lang]} />
+      <PageHeader title={memberCopy.title[lang]} intro={memberCopy.intro[lang]} />
+      <MemberDirectory lang={lang} />
       <section className="wrap pb-10">
         <ul className="border-t border-line">
           {t.ways.map((w, i) => (
