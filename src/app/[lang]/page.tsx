@@ -37,7 +37,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ───────── Hero ───────── */}
-      <LampHero className="pb-16 pt-28 sm:pb-24 sm:pt-36">
+      <LampHero className="pb-16 pt-24 sm:pb-24 sm:pt-28">
         <Wheel className="spin-slow wheel-in pointer-events-none absolute -right-44 -top-28 -z-10 h-[46rem] w-[46rem] text-lamp opacity-[0.13]" />
         <div className="wrap grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="hero-in">
@@ -63,7 +63,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           </div>
 
           <article className="hero-card">
-            <div className="relative overflow-hidden rounded-5xl bg-gradient-to-br from-[#ffe39a] via-[#f6b81c] to-[#e07a0b] p-6 text-[#5c0f14] shadow-[0_40px_80px_-30px_rgba(232,120,11,.65)] transition-transform duration-500 sm:p-8 lg:rotate-[1.5deg] lg:hover:rotate-0">
+            <div className="relative overflow-hidden rounded-5xl bg-gradient-to-br from-[#ffe39a] via-[#f6b81c] to-[#e07a0b] p-6 text-[#5c0f14] shadow-[0_40px_80px_-30px_rgba(232,120,11,.65)] transition-transform duration-500 sm:p-8">
               <Wheel className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 opacity-[0.14]" />
               <p className="relative inline-flex items-center gap-2 rounded-full bg-[#5c0f14] px-3 py-1 text-xs font-semibold text-[#ffe9b8]">
                 <Icon name="calendar" size={14} />
