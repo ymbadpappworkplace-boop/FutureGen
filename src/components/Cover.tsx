@@ -44,9 +44,9 @@ export function Book({ seed, title, badge }: { seed: number; title: string; badg
       {badge && (
         <span className="absolute right-3 top-3 rounded-md bg-black/55 px-2 py-0.5 text-[0.7rem] font-bold text-white">{badge}</span>
       )}
-      <div className="absolute inset-x-0 bottom-0 p-5 pl-7">
+      <div className="absolute inset-x-0 bottom-0 p-3 pl-5 sm:p-5 sm:pl-7">
         <div className="mb-3 h-0.5 w-8 rounded-full bg-current opacity-60" />
-        <p className="text-lg font-bold leading-snug">{title}</p>
+        <p className="text-sm font-bold leading-snug sm:text-lg">{title}</p>
       </div>
       </div>
     </div>

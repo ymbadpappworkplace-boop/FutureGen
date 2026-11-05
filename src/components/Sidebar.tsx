@@ -56,7 +56,7 @@ export function Sidebar({ lang }: { lang: Lang }) {
         </span>
       </button>
 
-      <nav className="mt-2 grid gap-1">
+      <nav className="mt-2 grid min-h-0 gap-1 overflow-x-hidden overflow-y-auto overscroll-contain">
         {items.map((it) => (
           <Link
             key={it.key}

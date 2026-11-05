@@ -75,7 +75,7 @@ export function CommandPalette({ lang }: { lang: Lang }) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-start justify-center bg-black/40 px-4 pt-[14vh] backdrop-blur-sm" onMouseDown={() => setOpen(false)}>
+    <div className="fixed inset-0 z-[80] flex items-start justify-center overflow-y-auto bg-black/40 px-3 pb-4 pt-[max(1rem,env(safe-area-inset-top))] backdrop-blur-sm sm:px-4 sm:pt-[10dvh]" onMouseDown={() => setOpen(false)}>
       <div
         role="dialog"
         aria-modal="true"
@@ -96,10 +96,11 @@ export function CommandPalette({ lang }: { lang: Lang }) {
             }}
             placeholder={ui.nav.searchPlaceholder[lang]}
             aria-label={ui.nav.search[lang]}
-            className="h-14 w-full bg-transparent text-base outline-none placeholder:text-muted"
+            className="h-14 min-w-0 w-full bg-transparent text-base outline-none placeholder:text-muted"
           />
+          <button type="button" onClick={() => setOpen(false)} aria-label={ui.nav.close[lang]} className="icon-btn"><Icon name="x" size={18} /></button>
         </div>
-        <ul role="listbox" className="max-h-[50vh] overflow-y-auto p-2">
+        <ul role="listbox" className="max-h-[60dvh] overflow-y-auto overscroll-contain p-2">
           {results.length === 0 && <li className="px-4 py-6 text-center text-muted">{ui.nav.noResults[lang]}</li>}
           {results.map((r, i) => (
             <li key={r.id} role="option" aria-selected={i === idx}>

@@ -28,11 +28,11 @@ export function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
-export function Logo({ lang, className = "" }: { lang: Lang; className?: string }) {
+export function Logo({ lang, className = "", compact = false }: { lang: Lang; className?: string; compact?: boolean }) {
   return (
     <Link href={href(lang)} className={`inline-flex items-center gap-2.5 ${className}`} aria-label="YMBA FutureGen">
       <Image src={brandLogo} alt="" width={48} height={48} sizes="48px" priority className="h-12 w-12 shrink-0 rounded-full object-contain" />
-      <Wordmark className="text-[1.05rem]" />
+      <Wordmark className={`${compact ? "hidden min-[480px]:inline" : ""} text-[1.05rem]`} />
     </Link>
   );
 }

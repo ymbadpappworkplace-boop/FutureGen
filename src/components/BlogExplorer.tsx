@@ -45,15 +45,15 @@ export function BlogExplorer({ lang, posts, limit }: { lang: Lang; posts: PostCa
 
   return (
     <div>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div role="group" aria-label={lang === "si" ? "ලිපි කාණ්ඩ" : "Article categories"} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+      <div className="flex min-w-0 flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div role="group" aria-label={lang === "si" ? "ලිපි කාණ්ඩ" : "Article categories"} className="flex min-w-0 max-w-full gap-2 overflow-x-auto overscroll-x-contain pb-2">
           {(["all", ...cats] as const).map((c) => (
             <button
               key={c}
               type="button"
               aria-pressed={cat === c}
               onClick={() => setCat(c)}
-              className={`h-10 shrink-0 rounded-full border px-4 text-sm font-semibold transition-colors ${
+              className={`min-h-11 shrink-0 rounded-full border px-4 text-sm font-semibold transition-colors ${
                 cat === c ? "border-fg bg-fg text-bg" : "border-line bg-card hover:border-fg/30"
               }`}
             >
@@ -61,7 +61,7 @@ export function BlogExplorer({ lang, posts, limit }: { lang: Lang; posts: PostCa
             </button>
           ))}
         </div>
-        <label className="relative block sm:w-64">
+        <label className="relative block w-full xl:w-64 xl:shrink-0">
           <span className="sr-only">{t.search[lang]}</span>
           <Icon name="search" size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t.search[lang]} className="field !rounded-full !py-2.5 pl-11" />

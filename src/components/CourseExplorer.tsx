@@ -22,15 +22,15 @@ export function CourseExplorer({ lang }: { lang: Lang }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div role="group" aria-label="Level" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+      <div className="flex min-w-0 flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div role="group" aria-label="Level" className="flex min-w-0 max-w-full gap-2 overflow-x-auto overscroll-x-contain pb-2">
           {levels.map((l) => (
             <button
               key={l}
               type="button"
               aria-pressed={level === l}
               onClick={() => setLevel(l)}
-              className={`h-10 shrink-0 rounded-full border px-4 text-sm font-semibold transition-colors ${
+              className={`min-h-11 shrink-0 rounded-full border px-4 text-sm font-semibold transition-colors ${
                 level === l ? "border-fg bg-fg text-bg" : "border-line bg-card hover:border-fg/30"
               }`}
             >
@@ -38,7 +38,7 @@ export function CourseExplorer({ lang }: { lang: Lang }) {
             </button>
           ))}
         </div>
-        <label className="relative block sm:w-64">
+        <label className="relative block w-full xl:w-64 xl:shrink-0">
           <span className="sr-only">{t.search[lang]}</span>
           <Icon name="search" size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t.search[lang]} className="field !rounded-full !py-2.5 pl-11" />
@@ -48,7 +48,7 @@ export function CourseExplorer({ lang }: { lang: Lang }) {
       {list.length === 0 ? (
         <p className="mt-12 text-center text-muted">{t.none[lang]}</p>
       ) : (
-        <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
+        <ul className="mt-10 grid grid-cols-1 gap-x-5 gap-y-10 min-[400px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
           {list.map((c) => (
             <li key={c.id} id={c.id} className="transition-transform duration-300 hover:-translate-y-1.5">
               <Book seed={c.seed} title={c.title[lang]} badge={c.kind === "pdf" ? "PDF" : undefined} />

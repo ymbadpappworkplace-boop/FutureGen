@@ -54,10 +54,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       {/* ───────── Hero ───────── */}
       <LampHero className="pb-16 pt-24 sm:pb-24 sm:pt-28">
         <Wheel className="spin-slow wheel-in pointer-events-none absolute -right-44 -top-28 -z-10 h-[46rem] w-[46rem] text-lamp opacity-[0.13]" />
-        <div className="wrap grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="wrap grid items-center gap-8 sm:gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <div className="hero-in">
             <p className="chip">{t.eyebrow[lang]}</p>
-            <h1 className="display mt-6 text-[2.6rem] sm:text-6xl lg:text-[4.6rem]">
+            <h1 className="display mt-6 text-[clamp(2rem,5vw,4.6rem)]">
               {t.line1[lang]}
               <br />
               <span className="text-gradient">{t.line2[lang]}</span>

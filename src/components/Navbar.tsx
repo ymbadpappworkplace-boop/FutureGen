@@ -25,6 +25,12 @@ export function Navbar({ lang }: { lang: Lang }) {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -48,14 +54,14 @@ export function Navbar({ lang }: { lang: Lang }) {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3">
+      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-[max(0.75rem,env(safe-area-inset-top))]">
         <nav
           aria-label="Main"
           className={`mx-auto flex h-14 max-w-6xl items-center justify-between rounded-full pl-4 pr-2 transition-all duration-300 ${
             scrolled ? "glass" : "border border-transparent"
           }`}
         >
-          <Logo lang={lang} />
+          <Logo lang={lang} compact />
 
          {/*<ul className="hidden items-center gap-0.5 lg:flex">
             {navItems.map((item) => (
@@ -88,7 +94,7 @@ export function Navbar({ lang }: { lang: Lang }) {
       </header>
 
       {/* app-style tab bar on phones */}
-      <nav aria-label="Quick" className="glass fixed inset-x-3 bottom-3 z-50 flex justify-around rounded-[1.6rem] p-1.5 lg:hidden">
+      <nav aria-label="Quick" className="glass fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 flex justify-around rounded-[1.6rem] p-1.5 lg:hidden">
         {tabs.map((t) => (
           <Link
             key={t.path}
@@ -115,7 +121,7 @@ export function Navbar({ lang }: { lang: Lang }) {
       </nav>
 
       {open && (
-        <div role="dialog" aria-modal="true" aria-label={ui.nav.menu[lang]} className="fixed inset-0 z-[60] overflow-y-auto bg-bg/95 px-5 pb-10 pt-5 backdrop-blur-2xl lg:hidden">
+        <div role="dialog" aria-modal="true" aria-label={ui.nav.menu[lang]} className="fixed inset-0 z-[60] overflow-y-auto overscroll-contain bg-bg/95 px-5 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))] backdrop-blur-2xl lg:hidden">
           <div className="flex items-center justify-between">
             <Logo lang={lang} />
             <button type="button" onClick={() => setOpen(false)} aria-label={ui.nav.close[lang]} className="icon-btn">
@@ -127,6 +133,7 @@ export function Navbar({ lang }: { lang: Lang }) {
               <li key={item.key}>
                 <Link
                   href={href(lang, item.path)}
+                  onClick={() => setOpen(false)}
                   className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-2xl font-bold ${
                     active(item.path) ? "bg-lamp/20" : ""
                   }`}

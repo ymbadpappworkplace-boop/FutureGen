@@ -16,21 +16,21 @@ export function DeviceMockup({ lang }: { lang: Lang }) {
           <i className="h-2.5 w-2.5 rounded-full bg-green-400" />
           <span className="ml-3 rounded-full bg-bg2 px-3 py-0.5 text-[0.65rem] text-muted">dsms</span>
         </div>
-        <div className="grid grid-cols-[3.2rem_1fr]">
+        <div className="grid grid-cols-[2.5rem_minmax(0,1fr)] sm:grid-cols-[3.2rem_minmax(0,1fr)]">
           <div className="flex flex-col items-center gap-3 border-r border-line bg-bg2/60 py-4">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-lamp text-[#1b0f02]"><Wheel className="h-5 w-5" /></span>
             {[0, 1, 2, 3].map((i) => <i key={i} className="h-5 w-5 rounded-md bg-fg/10" />)}
           </div>
-          <div className="p-4 sm:p-5">
-            <div className="grid grid-cols-3 gap-3">
+          <div className="min-w-0 p-2 sm:p-5">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
               {[
                 { l: m.attendance[lang], c: "from-lamp2 to-lamp" },
                 { l: m.results[lang], c: "from-[#3b78e8] to-gen" },
                 { l: m.grades[lang], c: "from-[#8a1c22] to-vihara" },
               ].map((s) => (
-                <div key={s.l} className={`rounded-2xl bg-gradient-to-br ${s.c} p-3 text-white`}>
+                <div key={s.l} className={`min-w-0 rounded-xl bg-gradient-to-br ${s.c} p-1.5 text-white sm:rounded-2xl sm:p-3`}>
                   <p className="truncate text-[0.62rem] font-medium opacity-90">{s.l}</p>
-                  <p className="mt-2 h-2 w-10 rounded-full bg-white/70" />
+                  <p className="mt-2 h-2 w-10 max-w-full rounded-full bg-white/70" />
                   <p className="mt-1.5 h-1.5 w-6 rounded-full bg-white/40" />
                 </div>
               ))}

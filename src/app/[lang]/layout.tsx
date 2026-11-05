@@ -2,7 +2,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Inter, Noto_Sans_Sinhala } from "next/font/google";
-// @ts-expect-error Next.js processes this stylesheet import at build time.
 import "../globals.css";
 import { isLang, locales } from "@/lib/i18n";
 import { ui } from "@/lib/content";
@@ -77,6 +76,7 @@ export const viewport: Viewport = {
   ],
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 // runs before first paint: applies the saved/system theme and enables the reveal animations

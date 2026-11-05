@@ -7,7 +7,7 @@ import { Logo } from "./Logo";
 
 export function Footer({ lang }: { lang: Lang }) {
   return (
-    <footer className="relative mt-10 border-t border-line bg-bg2/50 pb-28 pt-12 lg:pb-8 lg:pt-16">
+    <footer className="relative mt-10 border-t border-line bg-bg2/50 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-12 lg:pb-8 lg:pt-16">
       <div aria-hidden="true" className="absolute inset-x-0 top-0 mx-auto h-px w-1/3 bg-gradient-to-r from-transparent via-lamp/60 to-transparent" />
       <div className="wrap grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr] lg:gap-16">
         <div className="sm:col-span-2 lg:col-span-1">

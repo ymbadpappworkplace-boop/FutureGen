@@ -45,6 +45,7 @@
 
 @layer base {
   html {
+    scroll-padding-top: 6rem;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
@@ -66,6 +67,8 @@
     border-radius: 0.5rem;
   }
   h1, h2, h3, h4 { text-wrap: balance; }
+  h1, h2, h3, h4, p, li { overflow-wrap: anywhere; }
+  .grid > *, .flex > * { min-width: 0; }
   p { text-wrap: pretty; }
 }
 
@@ -101,8 +104,8 @@
 
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    height: 3rem; padding: 0 1.5rem; border-radius: 9999px;
-    font-weight: 600; font-size: 0.95rem; white-space: nowrap; cursor: pointer;
+    min-height: 3rem; padding: 0.7rem 1.5rem; border-radius: 9999px;
+    font-weight: 600; font-size: 0.95rem; white-space: normal; text-align: center; cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.2s ease;
   }
   .btn:active { transform: scale(0.97); }
@@ -118,7 +121,7 @@
   .btn-ghost:hover { background: var(--card-solid); }
 
   .icon-btn {
-    display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 9999px;
+    display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; flex-shrink: 0; border-radius: 9999px;
     transition: background-color 0.2s ease; cursor: pointer;
   }
   .icon-btn:hover { background: var(--line); }
@@ -131,7 +134,7 @@
 
   .field {
     width: 100%; border-radius: 1rem; border: 1px solid var(--line); background: var(--card-solid);
-    padding: 0.85rem 1rem; font: inherit; color: inherit; transition: border-color 0.2s, box-shadow 0.2s;
+    padding: 0.85rem 1rem; font: inherit; font-size: 1rem; min-width: 0; color: inherit; transition: border-color 0.2s, box-shadow 0.2s;
   }
   .field:focus { outline: none; border-color: var(--gen); box-shadow: 0 0 0 4px color-mix(in srgb, var(--gen) 18%, transparent); }
 
@@ -205,7 +208,7 @@
 .spin-slow { animation: spin-slow 160s linear infinite; }
 
 @keyframes marquee { to { transform: translateX(-50%); } }
-.marquee-track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
+.marquee-track { display: flex; width: max-content; animation: marquee 20s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 
 /* gentle reveal, used only on the bento grid */
