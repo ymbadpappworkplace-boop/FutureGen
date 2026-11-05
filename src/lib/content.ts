@@ -55,15 +55,16 @@ export const ui = {
     goHome: { si: "මුල් පිටුවට", en: "Back to home" },
   },
   home: {
-    eyebrow: { si: "කොළඹ තරුණ බෞද්ධ සංගමය", en: "Colombo Young Men's Buddhist Association" },
-    line1: { si: "අතීත ප්‍රඥාව", en: "Ancient wisdom," },
-    line2: { si: "ඩිජිටල් අනාගතයට", en: "for a digital future." },
+    eyebrow: { si: "පංසලෙන් ගමට ගම පංසලට", en: "From the temple to the village, from the village to the temple" },
+    line1: { si: "Welcome to Your New", en: "Welcome to Your New" },
+    line2: { si: "Online Knowledge Hub", en: "Online Knowledge Hub" },
     sub: {
-      si: "ඔබේ නව අන්තර්ජාල දැනුම් මධ්‍යස්ථානය. පිංකම්, දහම් අධ්‍යාපනය, ප්‍රජාව සහ තාක්ෂණය එක්තැන් කරමින්.",
-      en: "Your new online knowledge hub: merit-making events, Dhamma education, community and technology in one place.",
+      si: '"DSMS මෘදුකාංගය හරහා ලාංකීය බෞද්ධ අධ්‍යාපනය ශක්තිමත් කරමින්, පරම්පරා අතර පාලමක් නිර්මාණය කිරීමට සහ අතීත ප්‍රඥාව ඩිජිටල් අනාගතයකට ගෙන එන්නට දරන වෑයමකි."',
+      en: '"DSMS මෘදුකාංගය හරහා ලාංකීය බෞද්ධ අධ්‍යාපනය ශක්තිමත් කරමින්, පරම්පරා අතර පාලමක් නිර්මාණය කිරීමට සහ අතීත ප්‍රඥාව ඩිජිටල් අනාගතයකට ගෙන එන්නට දරන වෑයමකි."',
     },
     ctaEvents: { si: "පිංකම් බලන්න", en: "See events" },
     ctaJoin: { si: "සාමාජික වන්න", en: "Become a member" },
+    ctaRegisterPinkama: { si: "පිංකමට ලියාපදිංචි වන්න", en: "Register the Pinkama" },
     motto: {
       si: "පංසලෙන් ගමට, ගමෙන් පංසලට",
       en: "From the temple to the village, and from the village to the temple",

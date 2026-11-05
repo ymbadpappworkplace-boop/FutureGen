@@ -53,7 +53,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
                 {t.ctaEvents[lang]}
               </Link>
               <Link href={href(lang, "/join")} className="btn btn-ghost">
-                {t.ctaJoin[lang]}
+                {t.ctaRegisterPinkama[lang]}
               </Link>
             </div>
             <p className="mt-10 flex items-center gap-3 text-sm font-medium text-muted">
