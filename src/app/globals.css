@@ -166,6 +166,39 @@
 .hero-in > *:nth-child(4) { animation-delay: 0.42s; }
 .hero-in > *:nth-child(5) { animation-delay: 0.55s; }
 .hero-card { opacity: 0; animation: rise 1s 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+
+.pillars-section .lit {
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px -20px rgb(35 16 8 / 25%);
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+.pillars-section .lit::after {
+  content: "↗";
+  position: absolute;
+  top: 1.75rem;
+  right: 1.75rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: .45;
+  font-size: 1.25rem;
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+.pillars-section .lit > span {
+  box-shadow: 0 6px 16px -8px rgb(0 0 0 / 35%);
+}
+.pillars-section .lit p { line-height: 1.7; }
+.pillars-section .lit:focus-visible { outline: 3px solid var(--lamp); outline-offset: 5px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .pillars-section .lit:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 45px -22px rgb(35 16 8 / 35%);
+  }
+  .pillars-section .lit:hover::after { opacity: 1; transform: translate(2px, -2px); }
+}
 .wheel-in { animation: kindle 1.6s 0.1s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
 @keyframes spin-slow { to { transform: rotate(360deg); } }

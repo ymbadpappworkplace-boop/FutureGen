@@ -1,4 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
+import pinkamaCard from "../../../public/pinkamacard.png";
+import dahampaslaLogo from "../../../public/dahampasla.avif";
+import ymbaLogo from "../../../public/ymba.avif";
 import { courses, events, posts, ui } from "@/lib/content";
 import { formatDate, getLang, href } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
@@ -8,9 +12,10 @@ import { LampHero } from "@/components/LampHero";
 import { Countdown } from "@/components/Countdown";
 import { Reveal } from "@/components/Reveal";
 import { Lit } from "@/components/Lit";
-import { Book, Cover } from "@/components/Cover";
+import { Book } from "@/components/Cover";
 import { DeviceMockup } from "@/components/DeviceMockup";
 import { Leaders } from "@/components/Leaders";
+import { BlogExplorer } from "@/components/BlogExplorer";
 
 export const revalidate = 3600; // refresh hourly so "next / recent" labels stay correct
 
@@ -21,7 +26,16 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   // the first item in `events` is the one featured in the hero
   const featured = events[0];
   const isPast = new Date(featured.date).getTime() < Date.now();
-  const latest = [...posts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+  const blogCards = [...posts].sort((a, b) => b.date.localeCompare(a.date)).map((p) => ({
+    slug: p.slug,
+    url: href(lang, `/blog/${p.slug}`),
+    category: p.category,
+    title: p.title[lang],
+    excerpt: p.excerpt[lang],
+    dateLabel: formatDate(p.date, lang, { day: "numeric", month: "short", year: "numeric" }),
+    readLabel: ui.blog.minRead[lang].replace("{n}", String(p.read)),
+    seed: p.seed,
+  }));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -65,23 +79,32 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           <article className="hero-card">
             <div className="relative overflow-hidden rounded-5xl bg-gradient-to-br from-[#ffe39a] via-[#f6b81c] to-[#e07a0b] p-6 text-[#5c0f14] shadow-[0_40px_80px_-30px_rgba(232,120,11,.65)] transition-transform duration-500 sm:p-8">
               <Wheel className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 opacity-[0.14]" />
+              <div className="relative mb-2 overflow-hidden rounded-2xl p-1 ring-1 ring-white/40">
+                <Image
+                  src={pinkamaCard}
+                  alt={featured.title[lang]}
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  priority
+                  className="h-auto w-full rounded-xl"
+                />
+              </div>
               <p className="relative inline-flex items-center gap-2 rounded-full bg-[#5c0f14] px-3 py-1 text-xs font-semibold text-[#ffe9b8]">
                 <Icon name="calendar" size={14} />
                 {isPast ? t.recentEvent[lang] : t.nextEvent[lang]}
               </p>
-              <h2 className="display relative mt-5 text-3xl sm:text-4xl">{featured.title[lang]}</h2>
-              <p className="relative mt-4 flex items-start gap-2 font-medium">
-                <Icon name="pin" size={18} className="mt-1 shrink-0" />
+              <h2 className="display relative mt-2 text-xl sm:text-2xl">{featured.title[lang]}</h2>
+              <p className="relative mt-1.5 flex items-start gap-2 text-xs font-medium">
+                <Icon name="pin" size={16} className="mt-0.5 shrink-0" />
                 {featured.venue[lang]}
               </p>
-              <p className="relative mt-1.5 flex items-center gap-2 font-medium">
-                <Icon name="clock" size={18} />
+              <p className="relative mt-1 flex items-center gap-2 text-xs font-medium">
+                <Icon name="clock" size={16} />
                 {formatDate(featured.date, lang)}
               </p>
-              <div className="relative mt-6">
+              <div className="relative mt-2 [&_[role=timer]>div]:py-1.5 [&_[role=timer]>div>div:first-child]:text-lg [&_[role=timer]>div>div:last-child]:mt-0.5">
                 <Countdown target={featured.date} labels={{ d: ui.events.cd.d[lang], h: ui.events.cd.h[lang], m: ui.events.cd.m[lang], s: ui.events.cd.s[lang] }} doneText={ui.events.done[lang]} tone="gold" />
               </div>
-              <Link href={href(lang, `/events/${featured.slug}`)} className="btn btn-ink relative mt-6 w-full !bg-[#5c0f14] !text-[#ffe9b8]">
+              <Link href={href(lang, `/events/${featured.slug}`)} className="btn btn-ink relative mt-2 w-full !py-2 !text-sm !bg-[#5c0f14] !text-[#ffe9b8]">
                 {t.quoteCta[lang]}
               </Link>
             </div>
@@ -90,14 +113,18 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       </LampHero>
 
       {/* ───────── Word strip ───────── */}
-      <div className="marquee overflow-hidden border-y border-line py-5" aria-hidden="true">
+      <div className="marquee flex h-20 items-center overflow-hidden border-y border-line" aria-hidden="true">
         <div className="marquee-track">
           {[0, 1].map((k) => (
-            <ul key={k} className="flex shrink-0 items-center gap-10 pr-10">
-              {t.words.map((w, i) => (
-                <li key={i} className="flex items-center gap-10 text-2xl font-semibold text-muted sm:text-3xl">
-                  {w[lang]}
-                  <Wheel className="h-5 w-5 text-lamp" />
+            <ul key={k} className="flex min-w-[100vw] shrink-0 items-center justify-around gap-10 pr-10">
+              {[dahampaslaLogo, ymbaLogo, dahampaslaLogo, ymbaLogo, dahampaslaLogo, ymbaLogo].map((logo, i) => (
+                <li key={i} className="flex shrink-0 items-center justify-center">
+                  <Image
+                    src={logo}
+                    alt=""
+                    sizes="(min-width: 640px) 224px, 192px"
+                    className="h-20 w-48 object-contain sm:w-56"
+                  />
                 </li>
               ))}
             </ul>
@@ -105,11 +132,39 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </div>
       </div>
 
-      {/* ───────── Pillars (bento) ───────── */}
-      <section className="section">
+      {/* ───────── Blog preview ───────── */}
+      <section className="section" aria-labelledby="home-blog-title">
         <div className="wrap">
-          <h2 className="display max-w-2xl text-4xl sm:text-5xl">{t.pillarsTitle[lang]}</h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-6">
+          <div className="relative overflow-hidden rounded-5xl border border-line bg-gradient-to-br from-lamp/10 via-card to-card p-5 sm:p-8 lg:p-10">
+            <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full bg-lamp/10 blur-3xl" />
+            <div className="relative mb-8 flex flex-wrap items-end justify-between gap-6">
+              <div className="max-w-2xl">
+                <span aria-hidden="true" className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-vihara text-lamp2"><Icon name="book" size={22} /></span>
+                <h2 id="home-blog-title" className="display text-3xl sm:text-4xl lg:text-5xl">{t.blogPreviewTitle[lang]}</h2>
+                <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">{t.blogPreviewIntro[lang]}</p>
+              </div>
+              <Link href={href(lang, "/blog")} className="btn btn-ghost shrink-0">
+                {t.allPosts[lang]} <Icon name="arrowUpRight" size={18} />
+              </Link>
+            </div>
+            <div className="relative">
+              <BlogExplorer lang={lang} posts={blogCards} limit={3} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ───────── Pillars (bento) ───────── */}
+      <section className="section pillars-section">
+        <div className="wrap">
+          <div className="flex items-end gap-8">
+            <div>
+              <span aria-hidden="true" className="mb-5 block h-1 w-14 rounded-full bg-gradient-to-r from-lamp to-gen" />
+              <h2 className="display max-w-2xl text-4xl sm:text-5xl">{t.pillarsTitle[lang]}</h2>
+            </div>
+            <div aria-hidden="true" className="mb-2 hidden h-px flex-1 bg-gradient-to-r from-line to-transparent sm:block" />
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-6">
             <Reveal className="md:col-span-4">
               <Lit href={href(lang, "/events")} className="group relative flex h-full min-h-[19rem] flex-col justify-between rounded-5xl bg-vihara p-7 text-white sm:p-9">
                 <Wheel className="pointer-events-none absolute -right-14 -top-14 h-72 w-72 text-lamp opacity-25 transition-transform duration-700 group-hover:rotate-45" />
@@ -208,31 +263,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             </div>
           </div>
           <DeviceMockup lang={lang} />
-        </div>
-      </section>
-
-      {/* ───────── Blog ───────── */}
-      <section className="section">
-        <div className="wrap">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="display text-4xl sm:text-5xl">{t.blogTitle[lang]}</h2>
-            <Link href={href(lang, "/blog")} className="btn btn-ghost">{t.allPosts[lang]}</Link>
-          </div>
-          <ul className="mt-10 grid gap-5 md:grid-cols-3">
-            {latest.map((p) => (
-              <li key={p.slug}>
-                <Lit href={href(lang, `/blog/${p.slug}`)} className="surface flex h-full flex-col rounded-3xl">
-                  <Cover seed={p.seed} className="h-40" />
-                  <div className="flex flex-1 flex-col p-5">
-                    <p className="text-xs font-semibold text-muted">{ui.blog.cat[p.category][lang]}</p>
-                    <h3 className="title mt-1.5 text-lg">{p.title[lang]}</h3>
-                    <p className="mt-2 flex-1 text-[0.95rem] text-muted line-clamp-3">{p.excerpt[lang]}</p>
-                    <p className="mt-4 text-sm text-muted">{formatDate(p.date, lang)}</p>
-                  </div>
-                </Lit>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 

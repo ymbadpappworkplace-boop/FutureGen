@@ -1,11 +1,22 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
+import technologyPhoto from "../../public/blog/technology.jpg";
+import educationPhoto from "../../public/blog/education.jpg";
+import communityPhoto from "../../public/blog/community.jpg";
+import dhammaPhoto from "../../public/blog/dhamma.jpg";
 import type { Lang } from "@/lib/i18n";
 import { ui, type PostCategory } from "@/lib/content";
 import { Icon } from "./Icon";
 import { Lit } from "./Lit";
-import { Cover } from "./Cover";
+
+const photos = {
+  technology: technologyPhoto,
+  education: educationPhoto,
+  community: communityPhoto,
+  dhamma: dhammaPhoto,
+};
 
 export type PostCard = {
   slug: string;
@@ -20,7 +31,7 @@ export type PostCard = {
 
 const cats: PostCategory[] = ["dhamma", "education", "community", "technology"];
 
-export function BlogExplorer({ lang, posts }: { lang: Lang; posts: PostCard[] }) {
+export function BlogExplorer({ lang, posts, limit }: { lang: Lang; posts: PostCard[]; limit?: number }) {
   const t = ui.blog;
   const [cat, setCat] = useState<PostCategory | "all">("all");
   const [q, setQ] = useState("");
@@ -35,7 +46,7 @@ export function BlogExplorer({ lang, posts }: { lang: Lang; posts: PostCard[] })
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div role="group" aria-label="Categories" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
+        <div role="group" aria-label={lang === "si" ? "ලිපි කාණ්ඩ" : "Article categories"} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
           {(["all", ...cats] as const).map((c) => (
             <button
               key={c}
@@ -61,14 +72,22 @@ export function BlogExplorer({ lang, posts }: { lang: Lang; posts: PostCard[] })
         <p className="mt-12 text-center text-muted">{t.none[lang]}</p>
       ) : (
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((p) => (
+          {list.slice(0, limit ?? list.length).map((p) => (
             <li key={p.slug}>
               <Lit href={p.url} className="surface group flex h-full flex-col rounded-3xl">
-                <Cover seed={p.seed} className="h-44">
+                <div className="relative h-44 overflow-hidden">
+                  <Image
+                    src={photos[p.category]}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    placeholder="blur"
+                    className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
+                  />
                   <span className="absolute left-4 top-4 rounded-full bg-black/35 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
                     {t.cat[p.category][lang]}
                   </span>
-                </Cover>
+                </div>
                 <div className="flex flex-1 flex-col p-5">
                   <h3 className="title text-lg">{p.title}</h3>
                   <p className="mt-2 line-clamp-3 flex-1 text-[0.95rem] text-muted">{p.excerpt}</p>

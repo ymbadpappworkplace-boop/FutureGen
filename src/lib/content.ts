@@ -55,6 +55,11 @@ export const ui = {
     goHome: { si: "මුල් පිටුවට", en: "Back to home" },
   },
   home: {
+    blogPreviewTitle: { si: "FutureGen බ්ලොග්", en: "FutureGen Blog" },
+    blogPreviewIntro: {
+      si: "බුදු දහමින් ආලෝකමත් වූ සිතුවිලි, ඉගැන්වීම් සහ ජීවිතයට අරුතක් එක් කරන අදහස් ගවේෂණය කරන්න. සෑම වදනක්ම ඔබව සැනසීම සහ අවබෝධය වෙත රැගෙන යාවි.",
+      en: "Explore thoughts, teachings, and reflections inspired by the Buddha’s path. Let each word guide you toward peace and understanding.",
+    },
     eyebrow: { si: "පංසලෙන් ගමට ගම පංසලට", en: "From the temple to the village, from the village to the temple" },
     line1: { si: "Welcome to Your New", en: "Welcome to Your New" },
     line2: { si: "Online Knowledge Hub", en: "Online Knowledge Hub" },
@@ -499,7 +504,7 @@ export type EventItem = {
 export const events: EventItem[] = [
   {
     slug: "thesaththa-gnana-ashirwada-maha-pujawa",
-    date: "2026-01-31T18:00:00+05:30",
+    date: "2027-01-31T18:00:00+05:30",
     seed: 0,
     title: {
       si: "තෙසැත්තෑ ඥාන ආශිර්වාද මහා පූජාව",
@@ -520,12 +525,12 @@ export const events: EventItem[] = [
     story: {
       si: [
         "අපේම මිනිසුන් වෙනුවෙන්...! ගංවතුරින් සහ නායයෑම් වලින් මියගිය සැමට පිං පැමිණවීමටත්, අවතැන් වූ අය වෙනුවෙන් සහන සැලසීමටත් YMBA FutureGen විසින් තෙසැත්තෑ ඥාන ආශිර්වාද මහා පූජාව සහිත පිංකම් මාලාවක් සංවිධානය කරයි.",
-        "පූජාව බොරැල්ල තිලකරත්නාරාම පුරාණ මහා විහාරයේදී 2026 ජනවාරි 31 වන දින සවස 6.00 ට පැවැත්වේ.",
+        "පූජාව බොරැල්ල තිලකරත්නාරාම පුරාණ මහා විහාරයේදී 2027 ජනවාරි 31 වන දින සවස 6.00 ට පැවැත්වේ.",
         "ව්‍යසනය ඉක්මනින් අමතක වෙයි; එහෙත් එයින් පීඩාවට පත් පවුල්වල දුක අමතක නොවේ. මේ මොහොතේ ඔවුන් සමඟ සිටිමු.",
       ],
       en: [
         "For our very own people…! In memory of everyone lost to floods and landslides, and in support of those who were displaced, YMBA FutureGen presents the Thesaththa Gnana Ashirwada Maha Puja and a series of merit-making programmes.",
-        "The puja takes place at Thilakarathnarama Purana Maha Viharaya, Borella, on 31 January 2026 at 6.00 pm.",
+        "The puja takes place at Thilakarathnarama Purana Maha Viharaya, Borella, on 31 January 2027 at 6.00 pm.",
         "Headlines move on quickly, but the grief of affected families does not. Let us stand with them.",
       ],
     },
