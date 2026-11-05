@@ -753,11 +753,11 @@ export const courses: Course[] = [
 /* Leadership (placeholders: replace names and add photos in /public)  */
 /* ------------------------------------------------------------------ */
 
-export const leaders: { name: L; role: L }[] = [
-  { name: { si: "නම මෙහි", en: "Full name" }, role: { si: "සභාපති", en: "President" } },
-  { name: { si: "නම මෙහි", en: "Full name" }, role: { si: "ලේකම්", en: "Secretary" } },
-  { name: { si: "නම මෙහි", en: "Full name" }, role: { si: "භාණ්ඩාගාරික", en: "Treasurer" } },
-  { name: { si: "නම මෙහි", en: "Full name" }, role: { si: "තාක්ෂණ ප්‍රධානී", en: "Technology lead" } },
+export const leaders: { name: L; role: L; image: string }[] = [
+  { name: { si: "මහේන්ද්‍ර ජයසේකර මහතා", en: "Mr Mahendra Jayasekara" }, role: { si: "සභාපති — YMBA", en: "President — YMBA" }, image: "/mahendra.avif" },
+  { name: { si: "සුනිල් එස්. සිරිසේන මහතා", en: "Mr. Sunil S. Sirisena" }, role: { si: "උප සභාපති — YMBA", en: "Vice President — YMBA" }, image: "/sunil.avif" },
+  { name: { si: "ප්‍රශාන්ත අබේකෝන් මහතා", en: "Mr Prashantha Abekoon" }, role: { si: "මහ ලේකම් — YMBA", en: "Secretary General — YMBA" }, image: "/prashantha.avif" },
+  { name: { si: "රන්ජන් ද සිල්වා මහතා", en: "Mr. Ranjan de Silva" }, role: { si: "ගරු භාණ්ඩාගාරික — YMBA", en: "Hon. Treasurer — YMBA" }, image: "/ranjan de silva.avif" },
 ];
 
 export const getEvent = (slug: string) => events.find((e) => e.slug === slug);

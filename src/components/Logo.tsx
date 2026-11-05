@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import brandLogo from "../../public/YMBA FutureGen Yellow Ring Logo.png";
 import { href, type Lang } from "@/lib/i18n";
 
 /** Dhammacakka (Wheel of Dhamma): eight spokes, hub, rim and rim-studs. */
@@ -29,9 +31,7 @@ export function Wordmark({ className = "" }: { className?: string }) {
 export function Logo({ lang, className = "" }: { lang: Lang; className?: string }) {
   return (
     <Link href={href(lang)} className={`inline-flex items-center gap-2.5 ${className}`} aria-label="YMBA FutureGen">
-      <span className="grid h-9 w-9 place-items-center rounded-[0.6rem] bg-gradient-to-br from-lamp2 to-lamp text-[#1b0f02] shadow-[0_6px_16px_-6px_rgba(232,154,0,.8)]">
-        <Wheel className="h-6 w-6" />
-      </span>
+      <Image src={brandLogo} alt="" width={48} height={48} sizes="48px" priority className="h-12 w-12 shrink-0 rounded-full object-contain" />
       <Wordmark className="text-[1.05rem]" />
     </Link>
   );

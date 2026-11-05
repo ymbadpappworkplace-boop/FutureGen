@@ -215,6 +215,25 @@
 }
 .js .reveal.is-in { opacity: 1; transform: none; }
 
+.academy-book { perspective: 1100px; }
+.academy-book-cover {
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  backface-visibility: hidden;
+  transition: transform 650ms cubic-bezier(.2,.7,.2,1), box-shadow 650ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .academy-book:hover .academy-book-cover {
+    transform: rotateY(-78deg);
+    box-shadow: 12px 4px 24px -12px rgb(0 0 0 / 40%);
+  }
+}
+a:focus-visible .academy-book-cover {
+  transform: rotateY(-78deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .academy-book-cover { transition: none; }
+}
 .snap-row { scroll-snap-type: x mandatory; scrollbar-width: none; }
 .snap-row::-webkit-scrollbar { display: none; }
 .snap-row > * { scroll-snap-align: start; }

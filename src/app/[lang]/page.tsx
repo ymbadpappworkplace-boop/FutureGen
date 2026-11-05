@@ -3,6 +3,7 @@ import Image from "next/image";
 import pinkamaCard from "../../../public/pinkamacard.png";
 import dahampaslaLogo from "../../../public/dahampasla.avif";
 import ymbaLogo from "../../../public/ymba.avif";
+import { PillarsSection } from "@/components/PillarsSection";
 import { courses, events, posts, ui } from "@/lib/content";
 import { formatDate, getLang, href } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
@@ -154,76 +155,35 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </div>
       </section>
 
-      {/* ───────── Pillars (bento) ───────── */}
-      <section className="section pillars-section">
-        <div className="wrap">
-          <div className="flex items-end gap-8">
-            <div>
-              <span aria-hidden="true" className="mb-5 block h-1 w-14 rounded-full bg-gradient-to-r from-lamp to-gen" />
-              <h2 className="display max-w-2xl text-4xl sm:text-5xl">{t.pillarsTitle[lang]}</h2>
-            </div>
-            <div aria-hidden="true" className="mb-2 hidden h-px flex-1 bg-gradient-to-r from-line to-transparent sm:block" />
-          </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-6">
-            <Reveal className="md:col-span-4">
-              <Lit href={href(lang, "/events")} className="group relative flex h-full min-h-[19rem] flex-col justify-between rounded-5xl bg-vihara p-7 text-white sm:p-9">
-                <Wheel className="pointer-events-none absolute -right-14 -top-14 h-72 w-72 text-lamp opacity-25 transition-transform duration-700 group-hover:rotate-45" />
-                <span className="relative grid h-12 w-12 place-items-center rounded-2xl bg-lamp text-[#1b0f02]"><Icon name="calendar" /></span>
-                <div className="relative">
-                  <h3 className="title text-3xl">{t.pillars.events.title[lang]}</h3>
-                  <p className="mt-3 max-w-md text-white/75">{t.pillars.events.text[lang]}</p>
-                </div>
-              </Lit>
-            </Reveal>
-
-            <Reveal delay={80} className="md:col-span-2">
-              <Lit href={href(lang, "/academy")} className="flex h-full min-h-[19rem] flex-col justify-between rounded-4xl bg-gradient-to-br from-lamp2 to-lamp p-7 text-[#1b0f02]">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#1b0f02] text-lamp2"><Icon name="cap" /></span>
-                <div>
-                  <h3 className="title text-2xl">{t.pillars.academy.title[lang]}</h3>
-                  <p className="mt-3 text-[#1b0f02]/75">{t.pillars.academy.text[lang]}</p>
-                </div>
-              </Lit>
-            </Reveal>
-
-            <Reveal delay={120} className="md:col-span-2">
-              <Lit href={href(lang, "/software")} className="surface flex h-full min-h-[17rem] flex-col justify-between rounded-4xl p-7">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gen text-white"><Icon name="smartphone" /></span>
-                <div>
-                  <h3 className="title text-2xl">{t.pillars.software.title[lang]}</h3>
-                  <p className="mt-3 text-muted">{t.pillars.software.text[lang]}</p>
-                </div>
-              </Lit>
-            </Reveal>
-
-            <Reveal delay={160} className="md:col-span-4">
-              <Lit href={href(lang, "/blog")} className="surface flex h-full min-h-[17rem] flex-col justify-between rounded-5xl p-7 sm:p-9">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-bg2"><Icon name="users" /></span>
-                <div>
-                  <h3 className="title text-3xl">{t.pillars.community.title[lang]}</h3>
-                  <p className="mt-3 max-w-md text-muted">{t.pillars.community.text[lang]}</p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {(["dhamma", "education", "community", "technology"] as const).map((c) => (
-                      <span key={c} className="chip">{ui.blog.cat[c][lang]}</span>
-                    ))}
-                  </div>
-                </div>
-              </Lit>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <PillarsSection lang={lang} />
 
       {/* ───────── Statement ───────── */}
       <section className="pb-6">
         <div className="wrap">
-          <div className="grain relative overflow-hidden rounded-5xl bg-vihara px-6 py-14 text-white sm:px-14 sm:py-20">
-            <Wheel className="spin-slow pointer-events-none absolute -right-28 -top-28 h-[28rem] w-[28rem] text-lamp opacity-20" />
-            <p className="relative font-semibold text-lamp2">{t.quoteLead[lang]}</p>
-            <blockquote className="display relative mt-4 max-w-3xl text-3xl sm:text-5xl">{t.quote[lang]}</blockquote>
-            <Link href={href(lang, `/events/${featured.slug}`)} className="btn btn-lamp relative mt-9">
-              {t.quoteCta[lang]}
-            </Link>
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-[#d8a650]/25 bg-gradient-to-br from-[#68151e] via-[#420b13] to-[#21070c] px-7 py-10 text-white shadow-[0_24px_65px_-32px_rgba(67,10,19,0.65)] sm:rounded-5xl sm:px-12 sm:py-14 lg:px-14">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[#ffe1a0]/70 to-transparent" />
+            <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-96 w-96 rounded-full bg-[#edac42]/10 blur-3xl" />
+            <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_15rem] lg:gap-14">
+              <div>
+                <p className="flex items-center gap-3 text-sm font-semibold tracking-wide text-[#f5d28e]">
+                  <span aria-hidden="true" className="h-px w-8 shrink-0 bg-[#f5d28e]/60" />
+                  {t.quoteLead[lang]}
+                </p>
+                <blockquote className="mt-6 max-w-3xl text-3xl font-semibold !leading-[1.2] tracking-tight text-[#fffaf0] sm:text-4xl lg:text-[2.65rem]">{t.quote[lang]}</blockquote>
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-6 border-t border-white/10 pt-6">
+                  <Link href={href(lang, `/events/${featured.slug}`)} className="group inline-flex min-h-12 items-center gap-5 rounded-full border border-[#ffe3a1]/60 bg-gradient-to-b from-[#ffe3a1] to-[#eeb74f] px-6 py-3 text-sm font-semibold text-[#381018] shadow-[0_6px_20px_-8px_rgba(238,183,79,0.5)] transition-shadow hover:shadow-[0_8px_26px_-6px_rgba(238,183,79,0.6)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ffe3a1]">
+                    {t.quoteCta[lang]}
+                    <Icon name="arrowRight" size={18} className="transition-transform motion-safe:group-hover:translate-x-1" />
+                  </Link>
+                  <span className="text-xs font-medium tracking-[0.2em] text-[#f5d28e]/60">YMBA FUTUREGEN</span>
+                </div>
+              </div>
+              <div aria-hidden="true" className="pointer-events-none relative hidden aspect-square items-center justify-center rounded-full border border-[#e8ba60]/15 p-7 lg:flex">
+                <div className="absolute inset-3 rounded-full border border-[#e8ba60]/10" />
+                <div className="absolute inset-8 rounded-full bg-[#e8ba60]/5 blur-xl" />
+                <Wheel className="relative h-full w-full text-[#e8ba60]/60 drop-shadow-[0_0_18px_rgba(232,186,96,0.15)]" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -269,9 +229,12 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       {/* ───────── Leadership ───────── */}
       <section className="section">
         <div className="wrap">
-          <h2 className="display text-4xl sm:text-5xl">{t.leadersTitle[lang]}</h2>
-          <p className="mt-3 max-w-xl text-lg text-muted">{t.leadersText[lang]}</p>
-          <div className="mt-12">
+          <div className="mx-auto max-w-2xl text-center">
+            <span aria-hidden="true" className="mx-auto mb-5 block h-1 w-12 rounded-full bg-lamp" />
+            <h2 className="display text-4xl sm:text-5xl">{t.leadersTitle[lang]}</h2>
+            <p className="mx-auto mt-4 max-w-xl text-lg text-muted">{t.leadersText[lang]}</p>
+          </div>
+          <div className="mt-12 rounded-[2.5rem] border border-line bg-gradient-to-b from-card to-transparent px-5 py-10 sm:px-10 sm:py-12">
             <Leaders lang={lang} />
           </div>
         </div>
@@ -280,11 +243,22 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       {/* ───────── Join ───────── */}
       <section className="pb-10 pt-4">
         <div className="wrap">
-          <div className="relative overflow-hidden rounded-5xl bg-gradient-to-br from-lamp2 via-lamp to-[#d9660a] px-6 py-14 text-[#1b0f02] sm:px-14 sm:py-20">
-            <Wheel className="spin-slow pointer-events-none absolute -bottom-32 -right-24 h-[26rem] w-[26rem] opacity-[0.14]" />
-            <h2 className="display relative max-w-xl text-4xl sm:text-5xl">{t.ctaTitle[lang]}</h2>
-            <p className="relative mt-4 max-w-md text-lg text-[#1b0f02]/80">{t.ctaText[lang]}</p>
-            <Link href={href(lang, "/join")} className="btn btn-ink relative mt-8">{t.ctaButton[lang]}</Link>
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-[#e9b84d] bg-gradient-to-br from-[#fff0bf] via-[#ffda77] to-[#edb03d] px-7 py-10 text-[#38131a] shadow-[0_24px_60px_-35px_rgba(166,104,10,0.55)] sm:rounded-5xl sm:px-12 sm:py-12">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
+            <Wheel className="pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 text-[#a16414] opacity-[0.08]" />
+            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+              <div className="max-w-2xl">
+                <span aria-hidden="true" className="mb-6 grid h-12 w-12 place-items-center rounded-2xl border border-white/60 bg-white/35 text-[#68151e] shadow-sm"><Icon name="users" size={24} /></span>
+                <h2 className="display text-3xl sm:text-4xl lg:text-5xl">{t.ctaTitle[lang]}</h2>
+                <p className="mt-4 max-w-lg text-base leading-relaxed text-[#38131a]/75 sm:text-lg">{t.ctaText[lang]}</p>
+              </div>
+              <div className="shrink-0 lg:border-l lg:border-[#8a561c]/20 lg:py-8 lg:pl-12">
+                <Link href={href(lang, "/join")} className="group inline-flex min-h-14 items-center justify-between gap-8 rounded-full border border-white/15 bg-[#4c101a] px-7 py-4 font-semibold text-[#fff5dd] shadow-[0_10px_24px_-12px_rgba(76,16,26,0.65)] transition-colors hover:bg-[#68151e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4c101a]">
+                  {t.ctaButton[lang]}
+                  <Icon name="arrowRight" size={20} className="transition-transform motion-safe:group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
