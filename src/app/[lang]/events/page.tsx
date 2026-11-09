@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { PinkamaProgramme } from "@/components/PinkamaProgramme";
+import Link from "next/link";
 import { events, ui, type EventItem } from "@/lib/content";
 import { formatDate, formatTime, getLang, href, type Lang } from "@/lib/i18n";
 import { Icon } from "@/components/Icon";
-import { Lit } from "@/components/Lit";
-import { PageHeader } from "@/components/PageHeader";
+import { Countdown } from "@/components/Countdown";
 
 export const revalidate = 3600;
 
@@ -12,51 +14,80 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return { title: ui.events.title[lang], description: ui.events.intro[lang] };
 }
 
-function EventRow({ e, lang, past }: { e: EventItem; lang: Lang; past: boolean }) {
+const copy = {
+  eyebrow: { si: "භක්තියෙන් එක්වන අපේ ප්‍රජාව", en: "A community gathering in devotion" },
+  explore: { si: "පිංකම බලන්න", en: "Explore the pinkama" },
+  next: { si: "විශේෂ පිංකම", en: "Featured pinkama" },
+  all: { si: "සියලු පිංකම්", en: "All gatherings" },
+  allIntro: { si: "ඉදිරි සහ පසුගිය වැඩසටහන් එකම තැනකින් සොයා බලන්න.", en: "Discover upcoming and past programmes in one place." },
+  past: { si: "පසුගිය වැඩසටහන්", en: "Past programmes" },
+};
+
+function EventCard({ event, lang, past = false }: { event: EventItem; lang: Lang; past?: boolean }) {
   return (
-    <Lit href={href(lang, `/events/${e.slug}`)} className="surface grid gap-5 rounded-4xl p-5 sm:grid-cols-[6.5rem_1fr_auto] sm:items-center sm:p-6">
-      <div className={`grid place-items-center rounded-3xl py-4 ${past ? "bg-bg2 text-muted" : "bg-gradient-to-br from-lamp2 to-lamp text-[#1b0f02]"}`}>
-        <span className="text-4xl font-bold leading-none tabular-nums">{formatDate(e.date, lang, { month: undefined, year: undefined })}</span>
-        <span className="mt-1.5 text-sm font-semibold">{formatDate(e.date, lang, { day: undefined, year: undefined, month: "short" })}</span>
+    <Link href={href(lang, `/events/${event.slug}`)} className="group surface relative flex h-full flex-col overflow-hidden rounded-[1.75rem] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-7">
+      <div className="flex items-start justify-between gap-4">
+        <span className={`chip ${past ? "" : "border-lamp/30 bg-lamp/10 text-fg"}`}>{past ? ui.events.badgePast[lang] : ui.events.badgeUpcoming[lang]}</span>
+        <span className="grid h-10 w-10 place-items-center rounded-full bg-bg2 transition group-hover:bg-fg group-hover:text-bg"><Icon name="arrowUpRight" size={17} /></span>
       </div>
-      <div>
-        <p className="mb-1 text-xs font-semibold text-muted">{past ? ui.events.badgePast[lang] : ui.events.badgeUpcoming[lang]}</p>
-        <h3 className="title text-xl sm:text-2xl">{e.title[lang]}</h3>
-        <p className="mt-2 line-clamp-2 text-muted">{e.summary[lang]}</p>
-        <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
-          <span className="inline-flex items-center gap-1.5"><Icon name="clock" size={15} />{formatTime(e.date, lang)}</span>
-          <span className="inline-flex items-center gap-1.5"><Icon name="pin" size={15} />{e.venue[lang]}</span>
-        </p>
+      <div className="mt-10 flex items-end gap-3 border-b border-line pb-5">
+        <strong className="text-5xl font-bold leading-none tabular-nums">{formatDate(event.date, lang, { month: undefined, year: undefined })}</strong>
+        <span className="pb-1 text-sm font-semibold uppercase tracking-wide text-muted">{formatDate(event.date, lang, { day: undefined, year: undefined, month: "short" })}</span>
       </div>
-      <span className="hidden h-11 w-11 place-items-center rounded-full bg-bg2 sm:grid"><Icon name="arrowUpRight" size={18} /></span>
-    </Lit>
+      <h3 className="title mt-6 text-2xl">{event.title[lang]}</h3>
+      <p className="mt-3 line-clamp-3 text-muted">{event.summary[lang]}</p>
+      <div className="mt-auto space-y-2 pt-7 text-sm">
+        <p className="flex items-center gap-2"><Icon name="clock" size={16} className="text-lamp" />{formatTime(event.date, lang)}</p>
+        <p className="flex items-start gap-2 text-muted"><Icon name="pin" size={16} className="mt-1 shrink-0 text-lamp" />{event.venue[lang]}</p>
+      </div>
+    </Link>
   );
 }
 
 export default async function EventsPage({ params }: { params: Promise<{ lang: string }> }) {
   const lang = await getLang(params);
   const now = Date.now();
-  const upcoming = events.filter((e) => new Date(e.date).getTime() >= now).sort((a, b) => a.date.localeCompare(b.date));
-  const past = events.filter((e) => new Date(e.date).getTime() < now).sort((a, b) => b.date.localeCompare(a.date));
+  const upcoming = events.filter((event) => new Date(event.date).getTime() >= now).sort((a, b) => a.date.localeCompare(b.date));
+  const past = events.filter((event) => new Date(event.date).getTime() < now).sort((a, b) => b.date.localeCompare(a.date));
+  const featured = upcoming.find((event) => !event.sample) ?? upcoming[0];
+  const remaining = upcoming.filter((event) => event !== featured);
 
   return (
-    <>
-      <PageHeader title={ui.events.title[lang]} intro={ui.events.intro[lang]} />
-      <div className="wrap pb-12">
-        <h2 className="title text-2xl">{ui.events.upcoming[lang]}</h2>
-        {upcoming.length ? (
-          <ul className="mt-5 grid gap-4">{upcoming.map((e) => <li key={e.slug}><EventRow e={e} lang={lang} past={false} /></li>)}</ul>
-        ) : (
-          <p className="surface mt-5 rounded-3xl p-8 text-muted">{ui.events.empty[lang]}</p>
-        )}
+    <main className="pb-20">
+      <section className="relative overflow-hidden bg-[#160b08] pb-16 pt-28 text-white sm:pb-24 sm:pt-36">
+        <div className="absolute inset-0 opacity-45">
+          <Image src="/pinkamacard.png" alt="" fill priority className="object-cover" sizes="100vw" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#160b08] via-[#160b08]/90 to-[#160b08]/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#160b08] via-transparent to-[#160b08]/20" />
+        </div>
+        <div className="wrap relative grid items-end gap-12 lg:grid-cols-[1.15fr_.85fr]">
+          <div className="hero-in max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[.18em] text-lamp2">{copy.eyebrow[lang]}</p>
+            <h1 className="display mt-5 text-5xl sm:text-7xl">{ui.events.title[lang]}</h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/72 sm:text-xl">{ui.events.intro[lang]}</p>
+            {featured && <Link href={href(lang, `/events/${featured.slug}`)} className="btn btn-lamp mt-8">{copy.explore[lang]} <Icon name="arrowRight" size={17} /></Link>}
+          </div>
+          {featured && (
+            <div className="glass rounded-[2rem] border-white/15 bg-black/25 p-5 text-white backdrop-blur-xl sm:p-7">
+              <div className="flex items-center justify-between gap-4"><p className="text-xs font-semibold uppercase tracking-[.14em] text-lamp2">{copy.next[lang]}</p><Icon name="sparkles" className="text-lamp2" /></div>
+              <h2 className="title mt-4 text-2xl sm:text-3xl">{featured.title[lang]}</h2>
+              <div className="mt-5 grid gap-2 text-sm text-white/75">
+                <p className="flex items-center gap-2"><Icon name="calendar" size={17} />{formatDate(featured.date, lang, { weekday: "long" })}, {formatTime(featured.date, lang)}</p>
+                <p className="flex items-start gap-2"><Icon name="pin" size={17} className="mt-1 shrink-0" />{featured.venue[lang]}</p>
+              </div>
+              <div className="mt-6"><Countdown target={featured.date} labels={{ d: ui.events.cd.d[lang], h: ui.events.cd.h[lang], m: ui.events.cd.m[lang], s: ui.events.cd.s[lang] }} doneText={ui.events.done[lang]} tone="dark" /></div>
+            </div>
+          )}
+        </div>
+      </section>
 
-        {past.length > 0 && (
-          <>
-            <h2 className="title mt-14 text-2xl">{ui.events.past[lang]}</h2>
-            <ul className="mt-5 grid gap-4">{past.map((e) => <li key={e.slug}><EventRow e={e} lang={lang} past /></li>)}</ul>
-          </>
-        )}
-      </div>
-    </>
+      <div className="pt-12 sm:pt-16"><PinkamaProgramme lang={lang} /></div>
+      <section className="wrap section">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="text-sm font-semibold text-lamp">{copy.all[lang]}</p><h2 className="display mt-2 text-3xl sm:text-5xl">{ui.events.upcoming[lang]}</h2></div><p className="max-w-md text-muted">{copy.allIntro[lang]}</p></div>
+        {remaining.length ? <div className="mt-9 grid gap-5 md:grid-cols-2">{remaining.map((event) => <EventCard key={event.slug} event={event} lang={lang} />)}</div> : !featured ? <p className="surface mt-8 rounded-3xl p-8 text-muted">{ui.events.empty[lang]}</p> : null}
+      </section>
+
+      {past.length > 0 && <section className="wrap pb-10"><h2 className="title text-2xl">{copy.past[lang]}</h2><div className="mt-6 grid gap-5 md:grid-cols-2">{past.map((event) => <EventCard key={event.slug} event={event} lang={lang} past />)}</div></section>}
+    </main>
   );
 }
