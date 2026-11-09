@@ -37,6 +37,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
     readLabel: ui.blog.minRead[lang].replace("{n}", String(p.read)),
     seed: p.seed,
   }));
+  const whatsappUrl = `https://wa.me/${siteConfig.phone.replace(/\D/g, "")}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -50,6 +51,18 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
+      {/* Keep WhatsApp contact visible while visitors move through the homepage. */}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contact us on WhatsApp"
+        title="WhatsApp"
+        className="fixed right-3 top-1/2 z-40 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_10px_28px_-8px_rgba(37,211,102,0.8)] transition-transform hover:scale-110 focus-visible:scale-110 sm:right-5 sm:h-14 sm:w-14"
+      >
+        <Icon name="whatsapp" size={27} strokeWidth={1.7} />
+      </a>
 
       {/* ───────── Hero ───────── */}
       <LampHero className="pb-16 pt-24 sm:pb-24 sm:pt-28">
