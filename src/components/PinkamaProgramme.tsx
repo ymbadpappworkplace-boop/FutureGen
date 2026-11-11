@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ui } from "@/lib/content";
 import type { Lang } from "@/lib/i18n";
+import { Icon } from "./Icon";
 
 const questions = [
   ["මෙම තෙසැත්තෑ ඥාන පූජාව යනු කුමක්ද?", "What is the Thesaththa Gnana Puja?",
@@ -47,20 +48,26 @@ export function PinkamaProgramme({ lang }: { lang: Lang }) {
     </header>
     <section aria-labelledby="programme-venues">
       <h2 id="programme-venues" className="title mb-5 text-3xl">{si ? "පිංකම් පැවැත්වූ ස්ථාන හා වේලාවන්" : "Programme dates and venues"}</h2>
-      <div className="surface grid overflow-hidden rounded-3xl md:grid-cols-2">
-        <div className="space-y-6 p-6 sm:p-8">
-          <div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid gap-4">
+          <div className="surface rounded-3xl border-l-4 border-l-lamp p-5 sm:p-6">
             <time dateTime="2025-12-31T14:00:00+05:30" className="text-sm text-muted">{si ? "2025 දෙසැම්බර් 31 බදාදා · සවස 2.00" : "Wednesday 31 December 2025 · 2 pm"}</time>
             <h3 className="title mt-2 text-xl">{venue}</h3>
-            <a className="mt-3 inline-block font-semibold text-gen underline" href="https://www.google.com/maps/search/?api=1&query=YMBA+Main+Hall+Borella">{mapsLabel}</a>
+            <a className="btn btn-ghost mt-4 min-h-11 w-full sm:w-auto" href="https://www.google.com/maps/search/?api=1&query=YMBA+Main+Hall+Borella"><Icon name="pin" size={17} />{mapsLabel}<Icon name="arrowUpRight" size={16} /></a>
           </div>
-          <div className="border-t border-line pt-5">
+          <div className="surface rounded-3xl border-l-4 border-l-lamp p-5 sm:p-6">
             <time dateTime="2026-01-31T18:00:00+05:30" className="text-sm text-muted">{si ? "2026 ජනවාරි 31 · සවස 6.00" : "31 January 2026 · 6 pm"}</time>
             <h3 className="title mt-2 text-xl">{si ? "තිලකරත්නාරාම පුරාණ මහා විහාරය, බොරැල්ල" : "Thilakarathnarama Purana Maha Viharaya, Borella"}</h3>
-            <a className="mt-3 inline-block font-semibold text-gen underline" href="https://www.google.com/maps/search/?api=1&query=Thilakarathnarama+Purana+Maha+Viharaya+Borella">{mapsLabel}</a>
+            <a className="btn btn-ghost mt-4 min-h-11 w-full sm:w-auto" href="https://www.google.com/maps/search/?api=1&query=Thilakarathnarama+Purana+Maha+Viharaya+Borella"><Icon name="pin" size={17} />{mapsLabel}<Icon name="arrowUpRight" size={16} /></a>
           </div>
         </div>
-        <iframe className="h-64 w-full md:h-full" loading="lazy" title={venue} src="https://maps.google.com/maps?q=YMBA%20Main%20Hall%20Borella&t=m&z=16&output=embed" />
+        <figure className="surface flex flex-col overflow-hidden rounded-3xl">
+          <figcaption className="flex items-center gap-3 border-b border-line px-5 py-4 font-semibold">
+            <Icon name="pin" className="shrink-0 text-lamp" />
+            {venue}
+          </figcaption>
+          <iframe className="h-64 w-full lg:flex-1" loading="lazy" title={venue} src="https://maps.google.com/maps?q=YMBA%20Main%20Hall%20Borella&t=m&z=16&output=embed" />
+        </figure>
       </div>
     </section>
     <section>
