@@ -8,6 +8,7 @@ import { courses, events, posts, ui } from "@/lib/content";
 import { formatDate, getLang, href } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 import { Icon } from "@/components/Icon";
+import { DevelopmentNotice } from "@/components/DevelopmentNotice";
 import { Wheel } from "@/components/Logo";
 import { LampHero } from "@/components/LampHero";
 import { Countdown } from "@/components/Countdown";
@@ -51,6 +52,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <DevelopmentNotice />
 
       {/* Keep WhatsApp contact visible while visitors move through the homepage. */}
       <a
